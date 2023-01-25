@@ -29,6 +29,21 @@ class _Chat extends State<Chat> {
 
   static const ApiKey = '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';
 
+  void sendMessage(message) async {
+    final res = await sendRequest(message);
+    if (res.statusCode == 200) {
+      final doin =
+          json.decode(await res.transform(utf8.decoder).join())['choices'];
+      for (var cor in doin) {
+        print(cor['text']);
+        _message.insert(0, Message(text: cor['text'], recive: "OpenAI"));
+      }
+      setState(() {});
+    } else {
+      print("Error!!!!!!!!!!");
+    }
+  }
+
   void send(String Text) {
     print(Text + "Controller");
 
@@ -41,6 +56,7 @@ class _Chat extends State<Chat> {
       _message.insert(0, message);
     });
     _cont.clear();
+    sendMessage(Text);
   }
 
   final TextEditingController _cont = TextEditingController();
