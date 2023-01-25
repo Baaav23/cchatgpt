@@ -36,6 +36,11 @@ class _Chat extends State<Chat> {
       text: Text,
       recive: 'You',
     );
+
+    setState(() {
+      _message.insert(0, message);
+    });
+    _cont.clear();
   }
 
   final TextEditingController _cont = TextEditingController();
@@ -66,11 +71,56 @@ class _Chat extends State<Chat> {
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
               ),
+              child: _buildTextComposer(
+                textController: _cont,
+                isComposing: true,
+                handleSubmitted: (x) {
+                  setState(() {
+                    send(x!);
+                  });
+                  return null;
+                },
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildTextComposer({
+    required TextEditingController textController,
+    required bool isComposing,
+    required Function? Function(String? x) handleSubmitted,
+  }) {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            Flexible(
+              child: TextField(
+                controller: textController,
+                onChanged: (text) {
+                  setState(() {
+                    isComposing = text.isNotEmpty;
+                  });
+                },
+                onSubmitted: handleSubmitted,
+                decoration:
+                    const InputDecoration.collapsed(hintText: 'Ask me!'),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.send,
+                color: Colors.blue,
+              ),
+              onPressed: isComposing
+                  ? () => handleSubmitted(textController.text)
+                  : null,
+            ),
+          ],
+        ));
   }
 }
 
