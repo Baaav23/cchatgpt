@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -27,6 +29,7 @@ class _Chat extends State<Chat> {
     return res;
   }
 
+  // ignore: constant_identifier_names
   static const ApiKey = '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';
 
   void sendMessage(message) async {
@@ -44,7 +47,9 @@ class _Chat extends State<Chat> {
     }
   }
 
+  // ignore: non_constant_identifier_names, duplicate_ignore
   void send(String Text) {
+    // ignore: prefer_interpolation_to_compose_strings, avoid_print
     print(Text + "Controller");
 
     Message message = Message(
