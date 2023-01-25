@@ -38,9 +38,39 @@ class _Chat extends State<Chat> {
     );
   }
 
+  final TextEditingController _cont = TextEditingController();
+  final List<Message> _message = [];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Bot"),
+          leading: Image.asset("lib/image/ChatGPT_Icon.png"),
+        ),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: ListView.builder(
+                reverse: true,
+                padding: const EdgeInsets.all(8.0),
+                itemBuilder: (_, index) {
+                  return _message[index];
+                },
+                itemCount: _message.length,
+              ),
+            ),
+            const Divider(height: 1.0, color: Colors.blue, thickness: 3),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
